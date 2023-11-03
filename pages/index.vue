@@ -23,7 +23,7 @@ const imgTrust = ref(null);
 
 const fetchData = async () => {
   try {
-    const response = await useTrust();
+    const response = await computedResponse.value;
     trustData.value = response.data.attributes.customer;
     imgRate.value = "http://localhost:1337"+(response.data.attributes.rating.data.attributes.url);
     ratingData.value = response.data.attributes.rated;
@@ -33,6 +33,9 @@ const fetchData = async () => {
     console.error("Error fetching trust data:", err);
   }
 };
+const computedResponse = computed(() =>{
+    return  useTrust();
+})
 
 onMounted(() => {
   fetchData();
